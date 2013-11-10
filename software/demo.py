@@ -21,6 +21,11 @@ import time
 from LedStrip_WS2801 import LedStrip_WS2801
 
 
+def c(rgb):
+    """Convert rgb syntax to ints: 'aaff0a' -> [170, 255, 10]"""
+    return list(bytearray.fromhex(rgb))
+
+
 def mySin(a, min, max):
     return min + ((max - min) / 2.) * (math.sin(a) + 1)
 
