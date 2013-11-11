@@ -50,6 +50,38 @@ def rainbowAll(ledStrip, times, sleep):
         if (sleep != 0):
             time.sleep(sleep)
 
+def gradient(ledStrip, sleep=1):
+    for i in range(1, ledStrip.nLeds + 1):
+        color = 255 * i / ledStrip.nLeds
+        ledStrip.setPixel(i, [color, 0, 0])
+    ledStrip.update()
+    time.sleep(sleep)
+    for i in range(1, ledStrip.nLeds + 1):
+        color = 255 * i / ledStrip.nLeds
+        ledStrip.setPixel(i, [0, color, 0])
+    ledStrip.update()
+    time.sleep(sleep)
+    for i in range(1, ledStrip.nLeds + 1):
+        color = 255 * i / ledStrip.nLeds
+        ledStrip.setPixel(i, [0, 0, color])
+    ledStrip.update()
+    time.sleep(sleep)
+    for i in range(1, ledStrip.nLeds + 1):
+        color = 255 * i / ledStrip.nLeds
+        ledStrip.setPixel(i, [color, 0, color])
+    ledStrip.update()
+    time.sleep(sleep)
+    for i in range(1, ledStrip.nLeds + 1):
+        color = 255 * i / ledStrip.nLeds
+        ledStrip.setPixel(i, [0, color, color])
+    ledStrip.update()
+    time.sleep(sleep)
+    for i in range(1, ledStrip.nLeds + 1):
+        color = 255 * i / ledStrip.nLeds
+        ledStrip.setPixel(i, [color, color, 0])
+    ledStrip.update()
+    time.sleep(sleep)
+
 
 def antialisedPoint(ledStrip, color, step, dscale, sleep=0):
     rr = color[0]
@@ -71,7 +103,7 @@ if __name__ == '__main__':
         nrOfleds = 160
     else:
         nrOfleds = int(sys.argv[1])
-    delayTime = 0.01
+    delayTime = 0.05
 
     # oldStrip = LedStrip_WS2801_FileBased(nrOfleds, "/dev/spidev0.0")
     # fillAll(oldStrip, [255, 0, 0], delayTime)
@@ -81,11 +113,11 @@ if __name__ == '__main__':
 
     while 1:
         fillAll(ledStrip, [0, 255, 0], delayTime)
-        rainbowAll(ledStrip, 200, 0.01)
-        fillAll(ledStrip, [255, 0, 0], 0.01)
-        fillAll(ledStrip, [0, 255, 0], 0.01)
-        fillAll(ledStrip, [0, 0, 255], 0.01)
+        rainbowAll(ledStrip, 200, delayTime)
+        fillAll(ledStrip, [255, 0, 0], delayTime)
+        fillAll(ledStrip, [0, 255, 0], delayTime)
+        fillAll(ledStrip, [0, 0, 255], delayTime)
         antialisedPoint(ledStrip, [255, 0, 0], 0.5, 0.3)
         antialisedPoint(ledStrip, [0, 255, 0], 0.5, 0.3)
         antialisedPoint(ledStrip, [0, 0, 255], 0.5, 0.3)
-        rainbowAll(ledStrip, 500, 0.01)
+        rainbowAll(ledStrip, 500, delayTime)
