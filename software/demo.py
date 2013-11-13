@@ -16,6 +16,7 @@
 
 from glob import iglob
 import math
+import os
 import sys
 import time
 
@@ -122,9 +123,14 @@ def test(ledStrip):
         rainbowAll(ledStrip, 500, delayTime)
 
 
-def image(strip):
-    for infile in iglob('*.png'):
-        img = Image.open(infile).convert('RGB')
+def image(strip, path='.'):
+    for infile in iglob(os.path.join(path, '*.png')):
+        try:
+            img = Image.open(infile).convert('RGB')
+            print infile
+        except IOError:
+            print "not found", infile
+            continue
         __, height = img.size
         img = img.resize([strip.nLeds, height], Image.ANTIALIAS)
         input_image = img.load()
@@ -133,6 +139,7 @@ def image(strip):
                 strip.setPixel(x, input_image[x, y])
             strip.update()
             time.sleep(0.1)
+    # TODO sleep for a while if no files
 
 
 if __name__ == '__main__':
@@ -142,5 +149,10 @@ if __name__ == '__main__':
         nrOfleds = int(sys.argv[1])
     delayTime = 0.05
 
+    if len(sys.argv) == 3:
+        path = sys.argv[2]
+    else:
+        path = '.'
+
     strip = LedStrip_WS2801(nrOfleds)
-    image(strip)
+    image(strip, path)
