@@ -50,6 +50,7 @@ def rainbowAll(ledStrip, times, sleep):
         if (sleep != 0):
             time.sleep(sleep)
 
+
 def gradient(ledStrip, sleep=1):
     for i in range(1, ledStrip.nLeds + 1):
         color = 255 * i / ledStrip.nLeds
@@ -98,18 +99,10 @@ def antialisedPoint(ledStrip, color, step, dscale, sleep=0):
         #   time.sleep(sleep)
 
 
-if __name__ == '__main__':
-    if len(sys.argv) == 1:
-        nrOfleds = 160
-    else:
-        nrOfleds = int(sys.argv[1])
-    delayTime = 0.05
-
+def test(ledStrip):
     # oldStrip = LedStrip_WS2801_FileBased(nrOfleds, "/dev/spidev0.0")
     # fillAll(oldStrip, [255, 0, 0], delayTime)
     # oldStrip.close()
-
-    ledStrip = LedStrip_WS2801(nrOfleds)
 
     while 1:
         fillAll(ledStrip, [0, 255, 0], delayTime)
@@ -121,3 +114,14 @@ if __name__ == '__main__':
         antialisedPoint(ledStrip, [0, 255, 0], 0.5, 0.3)
         antialisedPoint(ledStrip, [0, 0, 255], 0.5, 0.3)
         rainbowAll(ledStrip, 500, delayTime)
+
+
+if __name__ == '__main__':
+    if len(sys.argv) == 1:
+        nrOfleds = 160
+    else:
+        nrOfleds = int(sys.argv[1])
+    delayTime = 0.05
+
+    strip = LedStrip_WS2801(nrOfleds)
+    test(strip)
