@@ -14,9 +14,12 @@
 # For more information about this project please visit:
 # http://www.hackerspaceshop.com/ledstrips/raspberrypi-ws2801.html
 
+from glob import iglob
 import math
 import sys
 import time
+
+import Image
 
 from LedStrip_WS2801 import LedStrip_WS2801
 
@@ -116,6 +119,18 @@ def test(ledStrip):
         rainbowAll(ledStrip, 500, delayTime)
 
 
+def image(strip):
+    for infile in iglob('*.png'):
+        img = Image.open(infile).convert('RGB')
+        input_image = img.load()
+        width, height = img.size
+        for y in range(height):
+            for x in range(strip.nLeds):
+                strip.setPixel(x, input_image[x, y])
+            strip.update()
+            time.sleep(0.1)
+
+
 if __name__ == '__main__':
     if len(sys.argv) == 1:
         nrOfleds = 160
@@ -124,4 +139,4 @@ if __name__ == '__main__':
     delayTime = 0.05
 
     strip = LedStrip_WS2801(nrOfleds)
-    test(strip)
+    image(strip)
