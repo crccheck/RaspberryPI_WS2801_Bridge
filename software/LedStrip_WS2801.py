@@ -49,7 +49,7 @@ class LedStrip_WS2801(object):
             self.setPixel(i, color, bufferNr)
 
     def setPixel(self, index, color, bufferNr=0):
-        self.buffers[bufferNr][index * 3:index * 3 + 3] = (color[0], color[2], color[1])
+        self.buffers[bufferNr][index * 3:index * 3 + 3] = color
 
 
 class LedStrip_WS2801_FileBased(LedStrip_WS2801):
