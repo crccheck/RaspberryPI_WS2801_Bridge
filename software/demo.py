@@ -21,7 +21,10 @@ import time
 
 import Image
 
-from LedStrip_WS2801 import LedStrip_WS2801
+try:
+    from LedStrip_WS2801 import LedStrip_WS2801
+except ImportError:
+    from Dummy_WS2801 import LedStrip_WS2801
 
 
 def c(rgb):
@@ -122,8 +125,9 @@ def test(ledStrip):
 def image(strip):
     for infile in iglob('*.png'):
         img = Image.open(infile).convert('RGB')
+        __, height = img.size
+        img = img.resize([strip.nLeds, height], Image.ANTIALIAS)
         input_image = img.load()
-        width, height = img.size
         for y in range(height):
             for x in range(strip.nLeds):
                 strip.setPixel(x, input_image[x, y])
