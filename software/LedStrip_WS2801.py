@@ -14,7 +14,7 @@
 # For more information about this project please visit:
 # http://www.hackerspaceshop.com/ledstrips/raspberrypi-ws2801.html
 
-import binascii
+# import binascii
 import spidev
 
 
@@ -44,7 +44,7 @@ class LedStrip_WS2801(object):
 
     def update(self, bufferNr=0):
         buffer = self.buffers[bufferNr]
-        print binascii.hexlify(bytearray(buffer))
+        # print binascii.hexlify(bytearray(buffer))
         self.spi.writebytes(buffer)
 
     def setAll(self, color, bufferNr=0):
