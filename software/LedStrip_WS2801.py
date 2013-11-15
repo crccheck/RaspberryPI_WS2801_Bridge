@@ -18,6 +18,9 @@ import binascii
 import spidev
 
 
+gamma = [int(pow(float(i) / 255.0, 2.5) * 255.0) for i in range(256)]
+
+
 class LedStrip_WS2801(object):
     """Access to SPI with python spidev library."""
     # spiDevice has format [
@@ -49,7 +52,10 @@ class LedStrip_WS2801(object):
             self.setPixel(i, color, bufferNr)
 
     def setPixel(self, index, color, bufferNr=0):
-        self.buffers[bufferNr][index * 3:index * 3 + 3] = color
+        self.buffers[bufferNr][index * 3:index * 3 + 3] = (
+                gamma[color[0]],
+                gamma[color[1]],
+                gamma[color[2]])
 
 
 class LedStrip_WS2801_FileBased(LedStrip_WS2801):

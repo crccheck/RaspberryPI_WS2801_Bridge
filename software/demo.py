@@ -156,5 +156,6 @@ if __name__ == '__main__':
 
     strip = LedStrip_WS2801(nrOfleds)
 
+    # test(strip)
     while True:
         image(strip, path)
