@@ -124,7 +124,8 @@ def test(ledStrip):
 
 
 def image(strip, path='.'):
-    for infile in iglob(os.path.join(path, '*.png')):
+    input_files = sorted(iglob(os.path.join(path, '*.png')))
+    for infile in input_files:
         try:
             img = Image.open(infile).convert('RGB')
             print infile
@@ -134,12 +135,23 @@ def image(strip, path='.'):
         __, height = img.size
         img = img.resize([strip.nLeds, height], Image.ANTIALIAS)
         input_image = img.load()
+        # img.save(infile + '.resample.jpg', 'JPEG')
         for y in range(height):
             for x in range(strip.nLeds):
                 strip.setPixel(x, input_image[x, y])
             strip.update()
             time.sleep(0.1)
-    # TODO sleep for a while if no files
+    if not input_files:
+        # show test patterns
+        fillAll(strip, [0, 255, 0], delayTime)
+        rainbowAll(strip, 200, delayTime)
+        fillAll(strip, [255, 0, 0], delayTime)
+        fillAll(strip, [0, 255, 0], delayTime)
+        fillAll(strip, [0, 0, 255], delayTime)
+        antialisedPoint(strip, [255, 0, 0], 0.5, 0.3)
+        antialisedPoint(strip, [0, 255, 0], 0.5, 0.3)
+        antialisedPoint(strip, [0, 0, 255], 0.5, 0.3)
+        rainbowAll(strip, 500, delayTime)
 
 
 if __name__ == '__main__':
