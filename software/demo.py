@@ -168,6 +168,7 @@ if __name__ == '__main__':
 
     strip = LedStrip_WS2801(nrOfleds)
 
+    # strip.index_map[0:nrOfleds - 1] = [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
     # test(strip)
     while True:
         image(strip, path)
